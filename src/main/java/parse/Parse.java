@@ -36,8 +36,7 @@ public class Parse {
 		NodeList dictList = doc.getElementsByTagName("dict");
 		Node node = dictList.item(2);
 		System.out.println("third dict value: " + node.getNodeName());
-
-		System.out.println();
+		tracks=new ArrayList<Track>();
 		if (node.hasChildNodes()) {
 			NodeList dictChildNodes = node.getChildNodes();
 			Node nodeChild = dictChildNodes.item(2);
@@ -53,7 +52,6 @@ public class Parse {
 			Node nodeTime = dictChildNodes.item(23);
 			time = Integer.parseInt(nodeTime.getTextContent().toString());
 			Track track = new Track(id, song, artist, album, genre, time);
-			tracks=new ArrayList<Track>();
 			tracks.add(track);
 		}
 	}
