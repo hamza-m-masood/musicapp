@@ -103,7 +103,7 @@ public class Track {
 	@Override
 	public String toString() {
 		return "Track [id=" + id + ", name=" + name + ", artist=" + artist + ", album=" + album + ", genre=" + genre
-				+ ", time=" + time + "]";
+				+ ", time=" + time + "]\n";
 	}
 	
 	
