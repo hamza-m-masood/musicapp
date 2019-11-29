@@ -26,6 +26,7 @@
  
         <!-- Mapping With Model Class Containing Annotations -->
         <mapping class="entities.Track"/>
+        <mapping class="entities.Playlist"/>
         
     </session-factory>
 </hibernate-configuration>

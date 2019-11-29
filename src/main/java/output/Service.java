@@ -11,13 +11,16 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import dao.PlaylistDAO;
 import dao.TrackDAO;
+import entities.Playlist;
 import entities.Track;
 import parse.Parse;
+
 @Path("/sampleservice")
 public class Service {
 	private static List<Track> tracks;
-
+	private static List<Playlist> playlist;
 	static {
 		Parse parse = new Parse();
 		try {
@@ -39,6 +42,15 @@ public class Service {
 		TrackDAO trackdao = new TrackDAO();
 		for (Track t : tracks) {
 			trackdao.saveTrack(t);
+		}
+
+		// CREATING ARRAYLIST OF PLAYLISTS
+		ArrayList<Playlist> playlist = parse.getPlaylists();
+		tracks = tracksStatic;
+		// USING HIBERNATE TO SAVE TRACKS
+		PlaylistDAO playlistdao = new PlaylistDAO();
+		for (Playlist p: playlist) {
+			//playlistdao.savePlaylist(p);
 		}
 
 	}
