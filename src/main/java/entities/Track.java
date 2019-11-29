@@ -9,6 +9,7 @@ import javax.persistence.Id;
 public class Track {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int trackid;
 	private int id;
 	private String name;
 	private String artist;
@@ -27,6 +28,14 @@ public class Track {
 		this.album = album;
 		this.genre = genre;
 		this.time = time;
+	}
+	
+	
+	public int getTrackid() {
+		return trackid;
+	}
+	public void setTrackid(int trackid) {
+		this.trackid = trackid;
 	}
 	/**
 	 * @return the id
@@ -105,6 +114,7 @@ public class Track {
 		return "Track [id=" + id + ", name=" + name + ", artist=" + artist + ", album=" + album + ", genre=" + genre
 				+ ", time=" + time + "]\n";
 	}
+	
 	
 	
 	
