@@ -1,6 +1,7 @@
 package output;
 
 import java.io.IOException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,13 +46,15 @@ public class Service {
 		}
 
 		// CREATING ARRAYLIST OF PLAYLISTS
-		ArrayList<Playlist> playlist = parse.getPlaylists();
-		tracks = tracksStatic;
+		ArrayList<Playlist> playlistStatic = parse.getPlaylists();
+		playlist=playlistStatic;
 		// USING HIBERNATE TO SAVE TRACKS
 		PlaylistDAO playlistdao = new PlaylistDAO();
 		for (Playlist p: playlist) {
-			//playlistdao.savePlaylist(p);
+			playlistdao.savePlaylist(p);
+			
 		}
+
 
 	}
 

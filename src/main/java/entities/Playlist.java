@@ -1,11 +1,15 @@
 package entities;
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.ForeignKey;
 @Entity
 public class Playlist {
 	@Id
@@ -13,7 +17,8 @@ public class Playlist {
 	int playlistid;
 	int id;
 	String name;
-	ArrayList<Track> tracks=new ArrayList<>();
+	@ManyToMany
+	List<Track> tracks=new ArrayList<>();
 	
 	
 	public Playlist() {
@@ -21,7 +26,7 @@ public class Playlist {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Playlist(int id, String name, ArrayList<Track> tracks) {
+	public Playlist(int id, String name, List<Track> tracks) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -49,10 +54,13 @@ public class Playlist {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public ArrayList<Track> getTracks() {
+	
+
+	public List<Track> getTracks() {
 		return tracks;
 	}
-	public void setTracks(ArrayList<Track> tracks) {
+
+	public void setTracks(List<Track> tracks) {
 		this.tracks = tracks;
 	}
 

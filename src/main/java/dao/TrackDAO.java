@@ -16,7 +16,7 @@ public class TrackDAO {
 	public TrackDAO() {
 		this.configObj = new Configuration();
 		configObj.configure("hibernate.cfg.xml");
-		this.sessionFactory = configObj.buildSessionFactory();
+		this.sessionFactory=HibernateUtil.getSessionFactory();
 	}
 	
 	public void saveTrack(Track track) {

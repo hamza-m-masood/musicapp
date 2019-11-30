@@ -17,7 +17,7 @@ public class PlaylistDAO {
 	public PlaylistDAO() {
 		this.configObj = new Configuration();
 		configObj.configure("hibernate.cfg.xml");
-		this.sessionFactory = configObj.buildSessionFactory();
+		this.sessionFactory=HibernateUtil.getSessionFactory();
 	}
 	
 	public void savePlaylist(Playlist playlist) {
