@@ -15,12 +15,14 @@ import dao.Playlist1DAO;
 import dao.PlaylistDAO;
 import dao.Track1DAO;
 import dao.TrackDAO;
+import dao.User1DAO;
 import dao.UserDAO;
 import entities.Playlist;
 import entities.Playlist1;
 import entities.Track;
 import entities.Track1;
 import entities.User;
+import entities.User1;
 import parse.Parse;
 
 @Path("/sampleservice")
@@ -82,6 +84,11 @@ public class Service {
 		User user=new User(parse.getLibraryPersistentIdFirst(), "hamza", "123", tracks, playlist);
 		UserDAO userdao=new UserDAO();
 		userdao.saveuser(user);
+		
+		//CREATING USER1 AND PERSISTING
+		User1 user1 =new User1(parse.getLibraryPersistentIdSecond(), "tom", "123", tracks1, playlist1);
+		User1DAO user1dao=new User1DAO();
+		user1dao.saveuser(user1);
 
 	}
 
