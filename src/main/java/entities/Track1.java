@@ -4,7 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+@XmlRootElement(name = "track1")
 @Entity
 public class Track1 {
 	@Id
@@ -32,7 +34,7 @@ public class Track1 {
 		this.time = time;
 	}
 	
-	
+	@XmlElement
 	public int getTrackid() {
 		return trackid;
 	}
@@ -42,6 +44,7 @@ public class Track1 {
 	/**
 	 * @return the id
 	 */
+	@XmlElement
 	public int getId() {
 		return id;
 	}
@@ -54,6 +57,7 @@ public class Track1 {
 	/**
 	 * @return the name
 	 */
+	@XmlElement
 	public String getName() {
 		return name;
 	}
@@ -66,6 +70,7 @@ public class Track1 {
 	/**
 	 * @return the artist
 	 */
+	@XmlElement
 	public String getArtist() {
 		return artist;
 	}
@@ -78,6 +83,7 @@ public class Track1 {
 	/**
 	 * @return the album
 	 */
+	@XmlElement
 	public String getAlbum() {
 		return album;
 	}
@@ -90,6 +96,7 @@ public class Track1 {
 	/**
 	 * @return the genre
 	 */
+	@XmlElement
 	public String getGenre() {
 		return genre;
 	}
@@ -102,6 +109,7 @@ public class Track1 {
 	/**
 	 * @return the time
 	 */
+	@XmlElement
 	public int getTime() {
 		return time;
 	}

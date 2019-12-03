@@ -102,13 +102,6 @@ public class Service {
 	}
 
 	@GET
-	@Path("/hello")
-	@Produces("text/plain")
-	public String hello() {
-		return "hello";
-	}
-
-	@GET
 	@Path("/tracks")
 	@Produces("text/plain")
 	public String tracks() {
@@ -142,9 +135,9 @@ public class Service {
 	@Path("/user/{name}/{password}/getalltracks/xml")
 	@Produces("application/xml")
 	public List<Track> getAllTracksUserXML(@PathParam("name") String name, @PathParam("password") String password) {
-		
+
 		if (name.equals(user.getName()) && password.equals(user.getPassword())) {
-			ArrayList<Track> tracks=new ArrayList<Track>();
+			ArrayList<Track> tracks = new ArrayList<Track>();
 			for (Track t : user.getTracks()) {
 				tracks.add(t);
 			}
@@ -155,26 +148,6 @@ public class Service {
 		return null;
 
 	}
-	
-	// GET ALL TRACKS FROM USER1: XML 
-		@GET
-		@Path("/user1/{name}/{password}/getalltracks/xml")
-		@Produces("application/xml")
-		public List<Track1> getAllTracksUser1XML(@PathParam("name") String name, @PathParam("password") String password) {
-			
-			if (name.equals(user.getName()) && password.equals(user.getPassword())) {
-				ArrayList<Track1> tracks1=new ArrayList<Track1>();
-				for (Track1 t : user1.getTracks1()) {
-					tracks1.add(t);
-				}
-
-				return tracks1;
-			}
-			System.out.println("not working.");
-			return null;
-
-		}
-	
 
 	// GET ALL TRACKS FROM USER1: STRING
 	@GET
@@ -198,11 +171,30 @@ public class Service {
 
 	}
 
+	// GET ALL TRACKS FROM USER1: XML
+	@GET
+	@Path("/user1/{name}/{password}/getalltracks/xml")
+	@Produces("application/xml")
+	public List<Track1> getAllTracksUser1XML(@PathParam("name") String name, @PathParam("password") String password) {
+
+		if (name.equals(user1.getName()) && password.equals(user1.getPassword())) {
+			ArrayList<Track1> tracks1 = new ArrayList<Track1>();
+			for (Track1 t : user1.getTracks1()) {
+				tracks1.add(t);
+			}
+
+			return tracks1;
+		}
+		System.out.println("not working.");
+		return null;
+
+	}
+
 	// GET ALL PLAYLISTS FROM USER: STRING
 	@GET
 	@Path("/user/{name}/{password}/getallplaylists")
 	@Produces("text/plain")
-	public String getAllPlaylistsUser(@PathParam("name") String name, @PathParam("password") String password) {
+	public String getAllPlaylistsUserxml(@PathParam("name") String name, @PathParam("password") String password) {
 		if (name.equals(user.getName()) && password.equals(user.getPassword())) {
 			String greetings = "Hello user name: " + name + " password: " + password + " Library Persistent ID"
 					+ user.getLibraryPersistentId() + "\n";
@@ -214,6 +206,24 @@ public class Service {
 		}
 		System.out.println("Incorrect user");
 		return "Icorrect user";
+
+	}
+
+	// GET ALL PLAYLISTS FROM USER: XML
+	@GET
+	@Path("/user/{name}/{password}/getallplaylists/xml")
+	@Produces("application/xml")
+	public List<Playlist> getAllPlaylistsUser(@PathParam("name") String name, @PathParam("password") String password) {
+		if (name.equals(user.getName()) && password.equals(user.getPassword())) {
+			ArrayList<Playlist> playlists = new ArrayList<Playlist>();
+			for (Playlist p : user.getPlaylists()) {
+				playlists.add(p);
+			}
+
+			return playlists;
+		}
+		System.out.println("Incorrect user");
+		return null;
 
 	}
 
@@ -233,6 +243,25 @@ public class Service {
 		}
 		System.out.println("Incorrect user");
 		return "Icorrect user";
+
+	}
+
+	// GET ALL PLAYLISTS FROM USER1: XML
+	@GET
+	@Path("/user1/{name}/{password}/getallplaylists/xml")
+	@Produces("application/xml")
+	public List<Playlist1> getAllPlaylistsUser1xml(@PathParam("name") String name,
+			@PathParam("password") String password) {
+		if (name.equals(user1.getName()) && password.equals(user1.getPassword())) {
+			ArrayList<Playlist1> playlists1 = new ArrayList<Playlist1>();
+			for (Playlist1 p1 : user1.getPlaylists1()) {
+				playlists1.add(p1);
+			}
+
+			return playlists1;
+		}
+		System.out.println("Incorrect user");
+		return null;
 
 	}
 
@@ -282,15 +311,15 @@ public class Service {
 
 	}
 
-	//ADD TRACK FOR USER
+	// ADD TRACK FOR USER
 	@POST
 	@Path("/user/{name}/{password}/tracks/addxml")
 	@Consumes("application/xml")
 	@Produces("application/xml")
-	
-	public Track addTrackXML(@PathParam("name") String name, @PathParam("password") String password,Track track) {
+
+	public Track addTrackXML(@PathParam("name") String name, @PathParam("password") String password, Track track) {
 		if (name.equals(user.getName()) && password.equals(user.getPassword())) {
-			TrackDAO trackdao=new TrackDAO();
+			TrackDAO trackdao = new TrackDAO();
 			user.getTracks().add(track);
 			trackdao.saveTrack(track);
 			return track;
@@ -298,21 +327,38 @@ public class Service {
 		System.out.println("did not go through");
 		return track;
 	}
-	
-	//UPDATE TRACK FOR USER
+
+	// ADD TRACK FOR USER1
+	@POST
+	@Path("/user1/{name}/{password}/tracks/addxml")
+	@Consumes("application/xml")
+	@Produces("application/xml")
+
+	public Track1 addTrack1XML(@PathParam("name") String name, @PathParam("password") String password, Track1 track1) {
+		if (name.equals(user1.getName()) && password.equals(user1.getPassword())) {
+			Track1DAO track1dao = new Track1DAO();
+			user1.getTracks1().add(track1);
+			track1dao.saveTrack(track1);
+			return track1;
+		}
+		System.out.println("did not go through");
+		return track1;
+	}
+
+	// UPDATE TRACK FOR USER
 	@POST
 	@Path("/user/{name}/{password}/tracks/updatexml")
 	@Consumes("application/xml")
 	@Produces("application/xml")
-	
-	public Track updateTrackXML(@PathParam("name") String name, @PathParam("password") String password,Track track) {
+
+	public Track updateTrackXML(@PathParam("name") String name, @PathParam("password") String password, Track track) {
 		if (name.equals(user.getName()) && password.equals(user.getPassword())) {
 			TrackDAO trackdao = new TrackDAO();
-			int count=0;
-			for(Track t: user.getTracks()) {
-				if(t.getId()==track.getId()) {
+			int count = 0;
+			for (Track t : user.getTracks()) {
+				if (t.getId() == track.getId()) {
 					user.getTracks().set(count, track);
-					trackdao.updateTrack(track);	
+					trackdao.updateTrack(track);
 				}
 				count++;
 			}
@@ -321,17 +367,45 @@ public class Service {
 		System.out.println("did not go through");
 		return track;
 	}
-	
-	//DELETE TRACK FOR USER
+
+	// UPDATE TRACK FOR USER1
+	@POST
+	@Path("/user1/{name}/{password}/tracks/updatexml")
+	@Consumes("application/xml")
+	@Produces("application/xml")
+
+	public Track1 updateTrack1XML(@PathParam("name") String name, @PathParam("password") String password,
+			Track1 track1) {
+		if (name.equals(user1.getName()) && password.equals(user1.getPassword())) {
+			Track1DAO track1dao = new Track1DAO();
+			int count = 0;
+			for (Track1 t1 : user1.getTracks1()) {
+				if (t1.getId() == track1.getId()) {
+					user1.getTracks1().set(count, track1);
+					track1dao.updateTrack(track1);
+				}
+				count++;
+			}
+			return track1;
+		}
+		System.out.println("did not go through");
+		return track1;
+	}
+
+	// DELETE TRACK FOR USER
 	@DELETE
 	@Path("/user/{name}/{password}/tracks/deletexml/{id}")
 	@Produces("text/plain")
-	
-	public String deleteTrackXML(@PathParam("name") String name, @PathParam("password") String password, @PathParam("id") String id) {
+
+	public String deleteTrackXML(@PathParam("name") String name, @PathParam("password") String password,
+			@PathParam("id") String id) {
 		if (name.equals(user.getName()) && password.equals(user.getPassword())) {
-			for(int i=0; i<user.getTracks().size(); i++) {
-				if(user.getTracks().get(i).getId()==Integer.parseInt(id)) {
+			TrackDAO trackdao = new TrackDAO();
+			for (int i = 0; i < user.getTracks().size(); i++) {
+				if (user.getTracks().get(i).getId() == Integer.parseInt(id)) {
+					trackdao.deleteTrack(user.getTracks().get(i).getId());
 					user.getTracks().remove(i);
+
 				}
 			}
 			return "deleted";
@@ -340,6 +414,26 @@ public class Service {
 		return "deleted";
 	}
 
-	
+	// DELETE TRACK FOR USER
+	@DELETE
+	@Path("/user1/{name}/{password}/tracks/deletexml/{id}")
+	@Produces("text/plain")
+
+	public String deleteTrack1XML(@PathParam("name") String name, @PathParam("password") String password,
+			@PathParam("id") String id) {
+		if (name.equals(user1.getName()) && password.equals(user1.getPassword())) {
+			Track1DAO track1dao = new Track1DAO();
+			for (int i = 0; i < user1.getTracks1().size(); i++) {
+				if (user1.getTracks1().get(i).getId() == Integer.parseInt(id)) {
+					track1dao.deleteTrack(user1.getTracks1().get(i).getId());
+					user1.getTracks1().remove(i);
+
+				}
+			}
+			return "deleted";
+		}
+		System.out.println("did not go through");
+		return "deleted";
+	}
 
 }

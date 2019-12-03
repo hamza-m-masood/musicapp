@@ -32,24 +32,27 @@ public class Track1DAO {
 		}
 	}
 	
-	public List<Track> getTracks(){
+	public List<Track1> getTracks(){
 		Session session=sessionFactory.openSession();
-		Query query = session.createQuery("from Track");
-		List<Track> tracks = query.list();
+		Query query = session.createQuery("from Track1");
+		List<Track1> tracks1 = query.list();
 		session.close();
-		return tracks;		
+		return tracks1;		
 	}
 	
-	public int updateDepartment(Track track) {
-		if (track.getId() <= 0)
+	public int updateTrack(Track1 track1) {
+		if (track1.getId() <= 0)
 			return 0;
 		Session session=sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		//FIX THIS
-		String hql = "update Track set deptname = :name where id = :id";
+		String hql = "update Track1 set album = :album, artist = :artist, genre = :genre, id = :id, name = :name, time = :time where id = :id";
 		Query query = session.createQuery(hql);
-		query.setParameter("id", track.getId());
-		query.setParameter("name", track.getId());
+		query.setParameter("album", track1.getAlbum());
+		query.setParameter("artist", track1.getArtist());
+		query.setParameter("genre", track1.getGenre());
+		query.setParameter("id", track1.getId());
+		query.setParameter("name", track1.getName());
+		query.setParameter("time", track1.getTime());
 		int rowCount = query.executeUpdate();
 
 		System.out.println("Rows affected: " + rowCount);
@@ -62,7 +65,7 @@ public class Track1DAO {
 		Session session=sessionFactory.openSession();
 		Transaction transaction=session.beginTransaction();
 		//FIX THIS
-		String hql="delete from Track where id= :id";
+		String hql="delete from Track1 where id= :id";
 		Query query=session.createQuery(hql);
 		query.setParameter("id", id);
 		int rowCount=query.executeUpdate();

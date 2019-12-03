@@ -9,7 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.persistence.ForeignKey;
+@XmlRootElement(name = "playlist")
 @Entity
 public class Playlist1 {
 	@Id
@@ -33,7 +36,7 @@ public class Playlist1 {
 		this.tracks1 = tracks1;
 	}
 	
-	
+	@XmlElement
 	public int getPlaylistid() {
 		return playlistid;
 	}
@@ -41,13 +44,14 @@ public class Playlist1 {
 	public void setPlaylistid(int playlistid) {
 		this.playlistid = playlistid;
 	}
-
+	@XmlElement
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
+	@XmlElement
 	public String getName() {
 		return name;
 	}
@@ -55,7 +59,7 @@ public class Playlist1 {
 		this.name = name;
 	}
 	
-
+	@XmlElement
 	public List<Track1> getTracks1() {
 		return tracks1;
 	}

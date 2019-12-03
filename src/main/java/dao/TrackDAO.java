@@ -44,7 +44,7 @@ public class TrackDAO {
 			return 0;
 		Session session=sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		//FIX THIS
+
 		String hql = "update Track set album = :album, artist = :artist, genre = :genre, id = :id, name = :name, time = :time where id = :id";
 		Query query = session.createQuery(hql);
 		query.setParameter("album", track.getAlbum());

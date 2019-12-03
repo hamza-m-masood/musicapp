@@ -7,7 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+@XmlRootElement(name = "user")
 @Entity
 public class User1 {
 	@Id
@@ -39,6 +41,7 @@ public class User1 {
 	/**
 	 * @return the libraryPersistentId
 	 */
+	@XmlElement
 	public String getLibraryPersistentId() {
 		return libraryPersistentId;
 	}
@@ -53,6 +56,7 @@ public class User1 {
 	/**
 	 * @return the id
 	 */
+	@XmlElement
 	public int getId() {
 		return id;
 	}
@@ -67,6 +71,7 @@ public class User1 {
 	/**
 	 * @return the name
 	 */
+	@XmlElement
 	public String getName() {
 		return name;
 	}
@@ -81,6 +86,7 @@ public class User1 {
 	/**
 	 * @return the password
 	 */
+	@XmlElement
 	public String getPassword() {
 		return password;
 	}
@@ -96,6 +102,7 @@ public class User1 {
 	/**
 	 * @return the tracks1
 	 */
+	@XmlElement
 	public List<Track1> getTracks1() {
 		return tracks1;
 	}
@@ -110,6 +117,7 @@ public class User1 {
 	/**
 	 * @return the playlists1
 	 */
+	@XmlElement
 	public List<Playlist1> getPlaylists1() {
 		return playlists1;
 	}
