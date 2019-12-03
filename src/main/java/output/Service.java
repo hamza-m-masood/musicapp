@@ -24,6 +24,7 @@ import entities.Track1;
 import entities.User;
 import entities.User1;
 import parse.Parse;
+import javax.ws.rs.PathParam;
 
 @Path("/sampleservice")
 public class Service {
@@ -31,6 +32,8 @@ public class Service {
 	private static List<Track1> tracks1;
 	private static List<Playlist> playlist;
 	private static List<Playlist1> playlist1;
+	private static User user;
+	private static User1 user1;
 	static {
 		Parse parse = new Parse();
 		try {
@@ -50,8 +53,8 @@ public class Service {
 		ArrayList<Track1> tracksStatic1 = parse.getTracks1();
 
 		tracks = tracksStatic;
-		tracks1=tracksStatic1;
-		
+		tracks1 = tracksStatic1;
+
 		// USING HIBERNATE TO SAVE TRACKS
 		TrackDAO trackdao = new TrackDAO();
 		Track1DAO track1dao = new Track1DAO();
@@ -59,7 +62,7 @@ public class Service {
 			trackdao.saveTrack(t);
 		}
 
-		for(Track1 t: tracks1) {
+		for (Track1 t : tracks1) {
 			track1dao.saveTrack(t);
 		}
 
@@ -67,27 +70,27 @@ public class Service {
 		ArrayList<Playlist> playlistStatic = parse.getPlaylists();
 		ArrayList<Playlist1> playlistStatic1 = parse.getPlaylists1();
 		playlist = playlistStatic;
-		playlist1=playlistStatic1;
+		playlist1 = playlistStatic1;
 		// USING HIBERNATE TO SAVE TRACKS
 		PlaylistDAO playlistdao = new PlaylistDAO();
-		Playlist1DAO playlist1dao=new Playlist1DAO();
-		
-		for(Playlist p: playlist) {
+		Playlist1DAO playlist1dao = new Playlist1DAO();
+
+		for (Playlist p : playlist) {
 			playlistdao.savePlaylist(p);
 		}
-		
+
 		for (Playlist1 p : playlist1) {
 			playlist1dao.savePlaylist(p);
 		}
-		
-		//CREATING USER AND PERSISTING
-		User user=new User(parse.getLibraryPersistentIdFirst(), "hamza", "123", tracks, playlist);
-		UserDAO userdao=new UserDAO();
+
+		// CREATING USER AND PERSISTING
+		user = new User(parse.getLibraryPersistentIdFirst(), "hamza", "123", tracks, playlist);
+		UserDAO userdao = new UserDAO();
 		userdao.saveuser(user);
-		
-		//CREATING USER1 AND PERSISTING
-		User1 user1 =new User1(parse.getLibraryPersistentIdSecond(), "tom", "123", tracks1, playlist1);
-		User1DAO user1dao=new User1DAO();
+
+		// CREATING USER1 AND PERSISTING
+		user1 = new User1(parse.getLibraryPersistentIdSecond(), "tom", "123", tracks1, playlist1);
+		User1DAO user1dao = new User1DAO();
 		user1dao.saveuser(user1);
 
 	}
@@ -104,5 +107,154 @@ public class Service {
 	@Produces("text/plain")
 	public String tracks() {
 		return tracks.toString();
+
 	}
+
+	// GET ALL TRACKS FROM USER: STRING
+	@GET
+	@Path("/user/{name}/{password}/getalltracks")
+	@Produces("text/plain")
+	public String getAllTracksUser(@PathParam("name") String name, @PathParam("password") String password) {
+		if (name.equals(user.getName()) && password.equals(user.getPassword())) {
+			String greetings = "Hello user name: " + name + " password: " + password + " Library Persistent ID"
+					+ user.getLibraryPersistentId() + "\n";
+
+			ArrayList<Track> tracks = new ArrayList<>();
+			for (Track t : user.getTracks()) {
+				tracks.add(t);
+			}
+
+			return greetings + tracks.toString();
+		}
+		System.out.println("Incorrect user");
+		return "Icorrect user";
+
+	}
+
+	// GET ALL TRACKS FROM USER: XML (not working)
+	@GET
+	@Path("/user/{name}/{password}/getalltracks/xml")
+	@Produces("application/xml")
+	public List<Track> getAllTracksUserXML(@PathParam("name") String name, @PathParam("password") String password) {
+		if (name.equals(user.getName()) && password.equals(user.getPassword())) {
+
+			ArrayList<Track> tracks = new ArrayList<>();
+			for (Track t : user.getTracks()) {
+				tracks.add(t);
+			}
+
+			return tracks;
+		}
+		System.out.println("not working.");
+		return null;
+
+	}
+
+	// GET ALL TRACKS FROM USER1: STRING
+	@GET
+	@Path("/user1/{name}/{password}/getalltracks")
+	@Produces("text/plain")
+	public String getAllTracksUser1(@PathParam("name") String name, @PathParam("password") String password) {
+		if (name.equals(user1.getName()) && password.equals(user1.getPassword())) {
+			String greetings = "Hello user name: " + name + " password: " + password + " Library Persistent ID"
+					+ user.getLibraryPersistentId() + "\n";
+
+			ArrayList<Track1> tracks1 = new ArrayList<>();
+			for (Track1 t : user1.getTracks1()) {
+				tracks1.add(t);
+			}
+
+			return greetings + tracks1.toString();
+
+		}
+		System.out.println("Incorrect user");
+		return "Icorrect user";
+
+	}
+
+	// GET ALL PLAYLISTS FROM USER: STRING
+	@GET
+	@Path("/user/{name}/{password}/getallplaylists")
+	@Produces("text/plain")
+	public String getAllPlaylistsUser(@PathParam("name") String name, @PathParam("password") String password) {
+		if (name.equals(user.getName()) && password.equals(user.getPassword())) {
+			String greetings = "Hello user name: " + name + " password: " + password + " Library Persistent ID"
+					+ user.getLibraryPersistentId() + "\n";
+
+			List<Playlist> playlists = new ArrayList<>();
+			playlists = user.getPlaylists();
+
+			return greetings + " " + new ArrayList<>(playlists).toString();
+		}
+		System.out.println("Incorrect user");
+		return "Icorrect user";
+
+	}
+
+	// GET ALL PLAYLISTS FROM USER1: STRING
+	@GET
+	@Path("/user1/{name}/{password}/getallplaylists")
+	@Produces("text/plain")
+	public String getAllPlaylistsUser1(@PathParam("name") String name, @PathParam("password") String password) {
+		if (name.equals(user1.getName()) && password.equals(user1.getPassword())) {
+			String greetings = "Hello user name: " + name + " password: " + password + " Library Persistent ID"
+					+ user.getLibraryPersistentId() + "\n";
+
+			List<Playlist1> playlists1 = new ArrayList<>();
+			playlists1 = user1.getPlaylists1();
+
+			return greetings + new ArrayList<>(playlists1).toString();
+		}
+		System.out.println("Incorrect user");
+		return "Icorrect user";
+
+	}
+
+	// GET SPECIFIC TRACK FROM USER: STRING
+	@GET
+	@Path("/user/{name}/{password}/gettrack/{id}")
+	@Produces("text/plain")
+	public String getSpecificTracksUser(@PathParam("name") String name, @PathParam("password") String password, @PathParam("id") String id) {
+		if (name.equals(user.getName()) && password.equals(user.getPassword())) {
+			String greetings = "Hello user name: " + name + " password: " + password + " Library Persistent ID"
+					+ user.getLibraryPersistentId() + "\n";
+
+			for (Track t : user.getTracks()) {
+				if(t.getId()==Integer.parseInt(id)) {
+					return greetings + t.toString();
+				}
+			}
+
+			return greetings + "track not found";
+		}
+		System.out.println("Incorrect user");
+		return "Icorrect user";
+
+	}
+	
+	// GET SPECIFIC PLAYLISTS FROM USER: STRING
+	@GET
+	@Path("/user/{name}/{password}/getplaylist/{id}")
+	@Produces("text/plain")
+	public String getSpecificPlaylistUser(@PathParam("name") String name, @PathParam("password") String password, @PathParam("id") String id) {
+		if (name.equals(user.getName()) && password.equals(user.getPassword())) {
+			String greetings = "Hello user name: " + name + " password: " + password + " Library Persistent ID"
+					+ user.getLibraryPersistentId() + "\n";
+
+			for (Playlist p : user.getPlaylists()) {
+				if(p.getId()==Integer.parseInt(id)) {
+					return greetings + p.toString()+"\n"+p.getTracks();
+				}
+			}
+
+			return greetings + "track not found";
+		}
+		System.out.println("Incorrect user");
+		return "Icorrect user";
+
+	}
+	
+	//CHANGE TRACK FROM USER
+	
+
 }

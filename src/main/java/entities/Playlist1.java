@@ -66,7 +66,7 @@ public class Playlist1 {
 
 	@Override
 	public String toString() {
-		return "Playlist [id=" + id + ", name=" + name + ", tracks1=" + tracks1 + "]";
+		return "Playlist [id=" + id + ", name=" + name + "]\n";
 	}
 	
 	
