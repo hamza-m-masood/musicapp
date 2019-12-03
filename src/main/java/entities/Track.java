@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-@XmlRootElement(name = "user")
+@XmlRootElement(name = "track")
 @Entity
 public class Track {
 	@Id

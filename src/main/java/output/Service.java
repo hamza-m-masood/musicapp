@@ -6,7 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -279,9 +282,63 @@ public class Service {
 
 	}
 
-	//UPDATE TRACKS FOR USER
+	//ADD TRACK FOR USER
+	@POST
+	@Path("/user/{name}/{password}/tracks/addxml")
+	@Consumes("application/xml")
+	@Produces("application/xml")
 	
+	public Track addTrackXML(@PathParam("name") String name, @PathParam("password") String password,Track track) {
+		if (name.equals(user.getName()) && password.equals(user.getPassword())) {
+			TrackDAO trackdao=new TrackDAO();
+			user.getTracks().add(track);
+			trackdao.saveTrack(track);
+			return track;
+		}
+		System.out.println("did not go through");
+		return track;
+	}
 	
+	//UPDATE TRACK FOR USER
+	@POST
+	@Path("/user/{name}/{password}/tracks/updatexml")
+	@Consumes("application/xml")
+	@Produces("application/xml")
+	
+	public Track updateTrackXML(@PathParam("name") String name, @PathParam("password") String password,Track track) {
+		if (name.equals(user.getName()) && password.equals(user.getPassword())) {
+			TrackDAO trackdao = new TrackDAO();
+			int count=0;
+			for(Track t: user.getTracks()) {
+				if(t.getId()==track.getId()) {
+					user.getTracks().set(count, track);
+					trackdao.updateTrack(track);	
+				}
+				count++;
+			}
+			return track;
+		}
+		System.out.println("did not go through");
+		return track;
+	}
+	
+	//DELETE TRACK FOR USER
+	@DELETE
+	@Path("/user/{name}/{password}/tracks/deletexml/{id}")
+	@Produces("text/plain")
+	
+	public String deleteTrackXML(@PathParam("name") String name, @PathParam("password") String password, @PathParam("id") String id) {
+		if (name.equals(user.getName()) && password.equals(user.getPassword())) {
+			for(int i=0; i<user.getTracks().size(); i++) {
+				if(user.getTracks().get(i).getId()==Integer.parseInt(id)) {
+					user.getTracks().remove(i);
+				}
+			}
+			return "deleted";
+		}
+		System.out.println("did not go through");
+		return "deleted";
+	}
 
 	
 

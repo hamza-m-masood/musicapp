@@ -39,16 +39,20 @@ public class TrackDAO {
 		return tracks;		
 	}
 	
-	public int updateDepartment(Track track) {
+	public int updateTrack(Track track) {
 		if (track.getId() <= 0)
 			return 0;
 		Session session=sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		//FIX THIS
-		String hql = "update Track set deptname = :name where id = :id";
+		String hql = "update Track set album = :album, artist = :artist, genre = :genre, id = :id, name = :name, time = :time where id = :id";
 		Query query = session.createQuery(hql);
+		query.setParameter("album", track.getAlbum());
+		query.setParameter("artist", track.getArtist());
+		query.setParameter("genre", track.getGenre());
 		query.setParameter("id", track.getId());
-		query.setParameter("name", track.getId());
+		query.setParameter("name", track.getName());
+		query.setParameter("time", track.getTime());
 		int rowCount = query.executeUpdate();
 
 		System.out.println("Rows affected: " + rowCount);
