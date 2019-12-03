@@ -2,11 +2,14 @@ package output;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
@@ -131,14 +134,14 @@ public class Service {
 
 	}
 
-	// GET ALL TRACKS FROM USER: XML (not working)
+	// GET ALL TRACKS FROM USER: XML
 	@GET
 	@Path("/user/{name}/{password}/getalltracks/xml")
 	@Produces("application/xml")
 	public List<Track> getAllTracksUserXML(@PathParam("name") String name, @PathParam("password") String password) {
+		
 		if (name.equals(user.getName()) && password.equals(user.getPassword())) {
-
-			ArrayList<Track> tracks = new ArrayList<>();
+			ArrayList<Track> tracks=new ArrayList<Track>();
 			for (Track t : user.getTracks()) {
 				tracks.add(t);
 			}
@@ -149,6 +152,26 @@ public class Service {
 		return null;
 
 	}
+	
+	// GET ALL TRACKS FROM USER1: XML 
+		@GET
+		@Path("/user1/{name}/{password}/getalltracks/xml")
+		@Produces("application/xml")
+		public List<Track1> getAllTracksUser1XML(@PathParam("name") String name, @PathParam("password") String password) {
+			
+			if (name.equals(user.getName()) && password.equals(user.getPassword())) {
+				ArrayList<Track1> tracks1=new ArrayList<Track1>();
+				for (Track1 t : user1.getTracks1()) {
+					tracks1.add(t);
+				}
+
+				return tracks1;
+			}
+			System.out.println("not working.");
+			return null;
+
+		}
+	
 
 	// GET ALL TRACKS FROM USER1: STRING
 	@GET
@@ -214,13 +237,14 @@ public class Service {
 	@GET
 	@Path("/user/{name}/{password}/gettrack/{id}")
 	@Produces("text/plain")
-	public String getSpecificTracksUser(@PathParam("name") String name, @PathParam("password") String password, @PathParam("id") String id) {
+	public String getSpecificTracksUser(@PathParam("name") String name, @PathParam("password") String password,
+			@PathParam("id") String id) {
 		if (name.equals(user.getName()) && password.equals(user.getPassword())) {
 			String greetings = "Hello user name: " + name + " password: " + password + " Library Persistent ID"
 					+ user.getLibraryPersistentId() + "\n";
 
 			for (Track t : user.getTracks()) {
-				if(t.getId()==Integer.parseInt(id)) {
+				if (t.getId() == Integer.parseInt(id)) {
 					return greetings + t.toString();
 				}
 			}
@@ -231,19 +255,20 @@ public class Service {
 		return "Icorrect user";
 
 	}
-	
+
 	// GET SPECIFIC PLAYLISTS FROM USER: STRING
 	@GET
 	@Path("/user/{name}/{password}/getplaylist/{id}")
 	@Produces("text/plain")
-	public String getSpecificPlaylistUser(@PathParam("name") String name, @PathParam("password") String password, @PathParam("id") String id) {
+	public String getSpecificPlaylistUser(@PathParam("name") String name, @PathParam("password") String password,
+			@PathParam("id") String id) {
 		if (name.equals(user.getName()) && password.equals(user.getPassword())) {
 			String greetings = "Hello user name: " + name + " password: " + password + " Library Persistent ID"
 					+ user.getLibraryPersistentId() + "\n";
 
 			for (Playlist p : user.getPlaylists()) {
-				if(p.getId()==Integer.parseInt(id)) {
-					return greetings + p.toString()+"\n"+p.getTracks();
+				if (p.getId() == Integer.parseInt(id)) {
+					return greetings + p.toString() + "\n" + p.getTracks();
 				}
 			}
 
@@ -253,8 +278,11 @@ public class Service {
 		return "Icorrect user";
 
 	}
+
+	//UPDATE TRACKS FOR USER
 	
-	//CHANGE TRACK FROM USER
+	
+
 	
 
 }
